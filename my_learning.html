@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Support & Maintenance: An End-to-End Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff; /* Lighter background for a cleaner look */
+            color: #334155; /* Slightly darker text for better readability */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        .presentation-container {
+            width: 100%;
+            max-width: 960px; /* Standard presentation width */
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #9cc9ff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            min-height: 600px; /* Ensures space for content */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .slide-content {
+            padding: 1.5rem;
+            border-radius: 1rem;
+            background-color: #f0f8ff; /* Light blue background for content */
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+            animation: fadeIn 0.5s ease-out;
+            flex-grow: 1; /* Occupy available space */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Vertically center content */
+            align-items: center; /* Horizontally center content */
+            text-align: center;
+        }
+
+        .slide-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 1rem;
+        }
+
+        .slide-content h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #0056b3;
+            margin-bottom: 1rem;
+        }
+
+        .slide-content p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+
+        .slide-content ul {
+            list-style-type: disc;
+            margin-left: 2rem;
+            font-size: 1.05rem;
+            text-align: left; /* Align list items left */
+            max-width: 80%; /* Constrain list width */
+            margin: 0 auto 1rem; /* Center list */
+            color: #4a5568;
+        }
+
+        .slide-content ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .slide-content table {
+            width: 80%;
+            margin: 1.5rem auto;
+            border-collapse: collapse;
+            font-size: 1.05rem;
+            color: #4a5568;
+        }
+
+        .slide-content th, .slide-content td {
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .slide-content th {
+            background-color: #e6f2ff;
+            font-weight: 600;
+            color: #0056b3;
+        }
+
+        /* Navigation Buttons - Will be different for dashboard */
+        .navigation-buttons {
+            display: flex;
+            justify-content: center; /* Center the dashboard button */
+            margin-top: 1.5rem;
+            padding: 0 1.5rem;
+        }
+
+        .nav-button {
+            background-color: #1e90ff;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-button:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .nav-button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            background-color: #007bff;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Dashboard specific styles */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+            gap: 1.5rem;
+            padding: 1rem;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        .dashboard-card {
+            background-color: #c1deff; /* Light blue card */
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 150px;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            background-color: #d1e9ff; /* Slightly darker on hover */
+        }
+
+        .dashboard-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0055af;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-card p {
+            font-size: 0.95rem;
+            color: #4a5568;
+            line-height: 1.4;
+        }
+
+        /* Modals and Popups (reused) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            border-radius: 1.25rem;
+            padding: 2.5rem;
+            max-width: 80%;
+            max-height: 80%;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3), 0 15px 30px -8px rgba(0, 0, 0, 0.15);
+            animation: popIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .modal-close-button {
+            background: none;
+            border: none;
+            font-size: 2.2rem;
+            cursor: pointer;
+            color: #64748b;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .modal-close-button:hover {
+            color: #ef4444;
+            transform: rotate(90deg);
+        }
+
+        .modal-body p, .modal-body ul, .modal-body table {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+
+        .modal-body ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+        }
+        .modal-body table {
+            width: 100%;
+        }
+
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.7); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #ffeb3b; /* Yellow */
+            opacity: 0;
+            animation: confetti-fall 2s ease-out forwards;
+            border-radius: 50%;
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(300px) rotate(720deg); opacity: 0; }
+        }
+
+        /* Custom buttons/elements for interactive content within slides */
+        .interactive-button {
+            background-color: #28a745; /* Green for interaction */
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .interactive-button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        /* Specific styles for interactive elements within modals */
+        .clickable-list-item {
+            cursor: pointer;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            background-color: #f7f7f7;
+            transition: background-color 0.2s ease;
+            text-align: left;
+        }
+        .clickable-list-item:hover {
+            background-color: #e6f2ff;
+        }
+        .clickable-list-details {
+            margin-top: 0.5rem;
+            font-size: 0.9em;
+            color: #64748b;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            opacity: 0;
+        }
+        .clickable-list-item.active .clickable-list-details {
+            max-height: 150px; /* Adjust as needed */
+            opacity: 1;
+        }
+
+        .animated-avatar {
+            font-size: 4rem;
+            animation: bounce 1s infinite alternate;
+            margin-top: 1.5rem;
+        }
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-15px); }
+        }
+
+        /* Table specific for severity slide */
+        .severity-table td {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .severity-table td:hover {
+            background-color: #e6f2ff;
+        }
+        .severity-modal-content {
+            background-color: #f7f7f7;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-top: 1rem;
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body class="p-8">
+    <div class="presentation-container">
+        <div id="current-slide-content" class="slide-content">
+            </div>
+
+        <div class="navigation-buttons" id="main-nav-buttons">
+            <button id="back-to-dashboard-btn" class="nav-button hidden">Back to Dashboard</button>
+            <button id="prev-section-slide-btn" class="nav-button hidden">Previous</button>
+            <button id="next-section-slide-btn" class="nav-button hidden">Next</button>
+        </div>
+    </div>
+
+    <div id="globalModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle" class="modal-title"></h2>
+                <button class="modal-close-button" onclick="closeModal()">×</button>
+            </div>
+            <div id="modalBody" class="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        const presentationContainer = document.getElementById('current-slide-content');
+        const backToDashboardButton = document.getElementById('back-to-dashboard-btn');
+        const prevSectionSlideButton = document.getElementById('prev-section-slide-btn');
+        const nextSectionSlideButton = document.getElementById('next-section-slide-btn');
+        const mainNavButtons = document.getElementById('main-nav-buttons');
+
+        const globalModal = document.getElementById('globalModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+
+        let currentSection = 'dashboard';
+        let currentSlideIndexInModule = 0;
+
+        const modules = {
+            dashboard: {
+                title: "What is Application Support & Maintenance (ASM) and How It Works",
+                
+                slides: [{
+                    content: `
+                        <p class="text-2xl font-semibold mb-4">Presented by: Balaji P</p>
+                        <p class="text-xl mb-8">July 2025</p>
+                        <div class="dashboard-grid">
+                            <div class="dashboard-card" onclick="navigateToModule('whatIsASM')">
+                                <h3>What is ASM?</h3>
+                                <p>Core concepts & objectives.</p>
+                            </div>
+                            <div class="dashboard-card" onclick="navigateToModule('asmStructure')">
+                                <h3>ASM Structure</h3>
+                                <p>L1, L2, L3 & other teams.</p>
+                            </div>
+                            <div class="dashboard-card" onclick="navigateToModule('ticketLifecycle')">
+                                <h3>Ticket Lifecycle</h3>
+                                <p>From creation to closure.</p>
+                            </div>
+                            <div class="dashboard-card" onclick="navigateToModule('changeManagement')">
+                                <h3>Change Management (CR)</h3>
+                                <p>Lifecycle & Strike Rule.</p>
+                            </div>
+                            <div class="dashboard-card" onclick="navigateToModule('documentation')">
+                                <h3>Documentation & Knowledge</h3>
+                                <p>Importance, KEDB & KT.</p>
+                            </div>
+                            <div class="dashboard-card" onclick="navigateToModule('metricsAndTools')">
+                                <h3>Metrics & Tools</h3>
+                                <p>Measuring success & common tools.</p>
+                            </div>
+                             <div class="dashboard-card" onclick="navigateToModule('proTips')">
+                                <h3>Daily Best Practices for Support Engineers</h3>
+                                <p>Best practices for success.</p>
+                            </div>
+                             <div class="dashboard-card" onclick="navigateToModule('thankYou')">
+                                <h3>Thank You!</h3>
+                                <p>Closing thoughts.</p>
+                            </div>
+                        </div>
+                    `,
+                }],
+                showNavButtons: false
+            },
+            whatIsASM: {
+                title: "What is ASM?",
+                slides: [
+                    {
+                        content: `
+                            <p class="mb-4"><strong>Application Support & Maintenance (ASM)</strong>  is the continuous process of managing, monitoring, updating, and improving live business applications after deployment to ensure they remain stable, secure, and meet user and business needs.</p>
+                            <p class="mb-4"><strong> ASM teams are responsible for:</strong> </p>
+                            <ul class="list-disc ml-6 text-left">
+                                <li><strong>Handling Incidents</strong> – Quickly resolving unexpected issues or system failures</li>
+                                <li><strong>Managing Service Requests</strong> – Addressing user needs like access, configuration, or minor change</li>
+                                <li><strong> Implementing Change Requests (CRs)</strong> – Delivering planned updates or enhancement</li>
+                                <li><strong>Supporting UAT & Deployments</strong> – Ensuring smooth testing and production rollout</li>
+                                <li><strong>Monitoring Application Health</strong> – Using tools to catch performance issues before users are impacted</li>
+                                <li><strong>Maintaining Documentation </strong>– Keeping SOPs, work notes, and Known Error Databases (KEDB) up to date</li>
+                                <li><strong>Facilitating Knowledge Transfers (KT)</strong> – Sharing expertise within the team</li>
+                                <li><strong>Ensuring Audit Compliance</strong> – Maintaining clean records and following SLAs for transparency and governance</li>
+                            </ul>
+                        `,
+                        interactiveButtonText: "ASM Objectives",
+                        interactiveContent: `
+                            <h3>Objectives</h3>
+                            <ul class="list-disc ml-6 text-left">
+                                <li>Ensure 24/7 application availability, stability, and performance</li>
+                                <li>Provide fast and effective incident resolution and user support (CRs)</li>
+                                <li>Support business continuity through regular monitoring and proactive measures</li>
+                                <li>Manage Change Requests (CRs) in a structured and traceable manner</li>
+                                <li>Maintain detailed and accurate documentation for audits and team reference</li>
+                                <li>Promote knowledge sharing to strengthen team capability and reduce knowledge gaps</li>
+                                <li>Reduce risk of SLA breaches</li>
+                            </ul>
+                            
+                        `
+                    }
+                ],
+                showNavButtons: true
+            },
+            asmStructure: {
+                title: "ASM Structure",
+                slides: [
+                    {
+                        content: `
+                            <p class="mb-4">Understanding the different support tiers is crucial:</p>
+                            <ul class="list-none text-left w-full max-w-sm mx-auto">
+                                <li class="clickable-list-item" data-details="<p><strong>L1 (Level 1):</strong> First point of contact, basic troubleshooting, logging issues, and monitoring alerts. Often relies on SOPs.</p>"><strong>L1:</strong> Basic support, logging, monitoring</li>
+                                <li class="clickable-list-item" data-details="<p><strong>L2 (Level 2):</strong> Functional troubleshooting, application-level fixes, deeper investigation into system behavior. Often requires domain knowledge.</p>"><strong>L2:</strong> Functional troubleshooting, application-level fixes</li>
+                                <li class="clickable-list-item" data-details="<p><strong>L3 (Level 3):</strong> Code-level debugging, in-depth technical analysis, and coordination with development teams for major fixes or enhancements. Requires strong technical skills.</p>"><strong>L3:</strong> Code-level debugging, coordination with dev teams</li>
+                                <li class="clickable-list-item" data-details="<p><strong>Infra & DB Teams:</strong> Support for underlying system resources like servers, networks, and databases, essential for application uptime.</p>"><strong>Infra & DB Teams:</strong> Support for system resources</li>
+                            </ul>
+                        `,
+                        interactiveButtonText: "Understanding Each Tier",
+                        interactiveContent: `
+                            
+                            <p>Click on each tier to learn more about its role and responsibilities:</p>
+                            <div class="flex flex-col gap-2">
+                                <div class="clickable-list-item" data-details="<p> This is the front line. They handle initial user contacts, create tickets, perform basic checks (e.g., 'Is the service running?'), and escalate complex issues. Their goal is quick resolution for common problems or efficient handover.</p>">
+                                    <strong>L1:</strong> Basic Support
+                                    <div class="clickable-list-details"></div>
+                                </div>
+                                <div class="clickable-list-item" data-details="<p> When L1 can't resolve an issue, it comes here. L2 engineers have deeper application knowledge, can perform more complex troubleshooting, analyze logs, and apply known fixes or workarounds. They're often focused on the application's functionality.</p>">
+                                    <strong>L2:</strong> Functional Troubleshooting
+                                    <div class="clickable-list-details"></div>
+                                </div>
+                                <div class="clickable-list-item" data-details="<p> For highly technical or code-related issues, L3 steps in. They may debug source code, implement complex data fixes, or work directly with the development team to push permanent code changes. They need a deep understanding of the application's architecture.</p>">
+                                    <strong>L3:</strong> Code-Level Debugging
+                                    <div class="clickable-list-details"></div>
+                                </div>
+                                <div class="clickable-list-item" data-details="<p> These teams support the foundational layers. If an application issue is due to a server crash, network outage, or database corruption, these specialized teams step in. ASM often coordinates heavily with them.</p>">
+                                    <strong>Infra & DB Teams:</strong> System Resources Support
+                                    <div class="clickable-list-details"></div>
+                                </div>
+                            </div>
+                        `,
+                        onModalOpen: function() {
+                            document.querySelectorAll('#modalBody .clickable-list-item').forEach(item => {
+                                item.addEventListener('click', function() {
+                                    const detailsDiv = this.querySelector('.clickable-list-details');
+                                    const isActive = this.classList.contains('active');
+                                    document.querySelectorAll('#modalBody .clickable-list-item').forEach(other => {
+                                        other.classList.remove('active');
+                                        other.querySelector('.clickable-list-details').style.maxHeight = '0';
+                                        other.querySelector('.clickable-list-details').style.opacity = '0';
+                                    });
+                                    if (!isActive) {
+                                        this.classList.add('active');
+                                        detailsDiv.innerHTML = this.getAttribute('data-details');
+                                        detailsDiv.style.maxHeight = detailsDiv.scrollHeight + "px";
+                                        detailsDiv.style.opacity = '1';
+                                    }
+                                });
+                            });
+                        }
+                    }
+                ],
+                showNavButtons: true
+            },
+            ticketLifecycle: {
+                title: "The Ticket Journey",
+                slides: [
+                    {
+                        content: `
+                            
+                            <div class="dashboard-grid">
+                                <div class="dashboard-card" onclick="navigateToModule('ticketLifecycle', 1)">
+                                    <h3>How Tickets Are Created</h3>
+                                    <p>Triggers & logging tools.</p>
+                                </div>
+                                <div class="dashboard-card" onclick="navigateToModule('ticketLifecycle', 2)">
+                                    <h3>Categorization & Severity</h3>
+                                    <p>Priorities & SLAs.</p>
+                                </div>
+                                <div class="dashboard-card" onclick="navigateToModule('ticketLifecycle', 3)">
+                                    <h3>SLA Breaches</h3>
+                                    <p>When & why they happen.</p>
+                                </div>
+                                <div class="dashboard-card" onclick="navigateToModule('ticketLifecycle', 4)">
+                                    <h3>RCA (Root Cause Analysis)</h3>
+                                    <p>Preventing future incidents.</p>
+                                </div>
+                                <div class="dashboard-card" onclick="navigateToModule('ticketLifecycle', 5)">
+                                    <h3>Work Notes vs. Resolution Notes</h3>
+                                    <p>Key documentation differences.</p>
+                                </div>
+                                <div class="dashboard-card" onclick="navigateToModule('ticketLifecycle', 6)">
+                                    <h3>When & How to Close</h3>
+                                    <p>Ensuring proper ticket closure.</p>
+                                </div>
+                            </div>
+                        `,
+                    },
+                    {
+                        title: "How Tickets Are Created",
+                        content: `
+                            <p class="mb-4">Tickets are the primary method used to track support work and requests. They can be triggered by::</p>
+                            <ul class="list-disc ml-6 text-left">
+                                <li><strong>User-reported issue:</strong> When a user directly reports a problem or malfunction</li>
+                                <li><strong>Monitoring alert:</strong> Automatically detected by tools like LogicMonitor or AppDynamics</li>
+                                <li><strong>Business request:</strong> When a user asks for access, report generation, or configuration changes</li>
+                            </ul>
+                            <p class="mt-4">These tickets are tracked and managed using tools like <strong>Jira, ServiceNow</strong>.</p>
+                            <h3 class="mt-6 text-2xl">Ticket Types:</h3>
+                            <ul class="list-none text-left w-full max-w-sm mx-auto">
+                                <li class="clickable-list-item" data-details="<p><strong>Incident:</strong> Something is broken or not working as expected. Requires immediate attention to restore service.</p>"><strong>Incident</strong></li>
+                                <li class="clickable-list-item" data-details="<p><strong>Service Request:</strong> Something is needed, like access, information, or a standard configuration change. Not a break/fix.</p>"><strong>Service Request</strong> </li>
+                                <li class="clickable-list-item" data-details="<p><strong>Change Request (CR):</strong> Something is to be changed or improved in the system. Often involves development and testing.</p>"><strong>Change Request (CR)</strong> </li>
+                            </ul>
+
+                            
+
+
+
+
+                        `,
+                        interactiveButtonText: "Define Ticket Types",
+                        interactiveContent: `
+                            
+                            <div class="flex flex-col gap-2">
+                                <div class="clickable-list-item" data-details="<p> An unplanned interruption or reduction in the quality of an IT service. Incidents must be resolved quickly to restore normal operations.</p>">
+                                    <strong>Incident</strong> 
+                                    <div class="clickable-list-details"></div>
+                                </div>
+                                <div class="clickable-list-item" data-details="<p> A standard request from a user for access, software installation, or other routine services. These are not related to outages or system failures.</p>">
+                                    <strong>Service Request</strong> 
+                                    <div class="clickable-list-details"></div>
+                                </div>
+                                <div class="clickable-list-item" data-details="<p> A formal proposal to modify the IT environment. This may involve new features, upgrades, bug fixes, or configuration changes. CRs require planning, testing, and approval to minimize risk.</p>">
+                                    <strong>Change Request (CR)</strong>
+                                    <div class="clickable-list-details"></div>
+                                </div>
+                            </div>
+                        `,
+                        onModalOpen: function() {
+                            document.querySelectorAll('#modalBody .clickable-list-item').forEach(item => {
+                                item.addEventListener('click', function() {
+                                    const detailsDiv = this.querySelector('.clickable-list-details');
+                                    const isActive = this.classList.contains('active');
+                                    document.querySelectorAll('#modalBody .clickable-list-item').forEach(other => {
+                                        other.classList.remove('active');
+                                        other.querySelector('.clickable-list-details').style.maxHeight = '0';
+                                        other.querySelector('.clickable-list-details').style.opacity = '0';
+                                    });
+                                    if (!isActive) {
+                                        this.classList.add('active');
+                                        detailsDiv.innerHTML = this.getAttribute('data-details');
+                                        detailsDiv.style.maxHeight = detailsDiv.scrollHeight + "px";
+                                        detailsDiv.style.opacity = '1';
+                                    }
+                                });
+                            });
+                        }
+                    },
+                    {
+                        title: "Ticket Categorization & Severity",
+                        content: `
+                            <p class="mb-4">Tickets are prioritized based on <strong>Impact</strong> and <strong>Urgency</strong>:</p>
+                            <table class="severity-table">
+                                <thead>
+                                    <tr>
+                                        <th>Priority</th>
+                                        <th>Impact</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr onclick="showSeverityDetail('P1', 'Full app down', 'Critical issue with full application outage. Affects multiple users or departments, halting business operations. May impact revenue, SLAs, or customer experience.')"><td>P1 (Critical)</td><td>Full app down</td></tr>
+                                    <tr onclick="showSeverityDetail('P2', 'Major function down', 'A major feature or module is down. Impacts a specific group or process. The app is still running, but productivity is reduced. Workarounds may exist but are inefficient.')"><td>P2 (High)</td><td>Major function down</td></tr>
+                                    <tr onclick="showSeverityDetail('P3', 'Partial impact', 'Affects a few users or a non-core function. Operations continue with minor disruption. Usually non-urgent but should be addressed soon.')"><td>P3 (Medium)</td><td>Partial impact</td></tr>
+                                    <tr onclick="showSeverityDetail('P4', 'Minor, cosmetic issues', 'Low-priority issue like cosmetic glitches or non-critical errors. Doesn’t affect business operations. Often resolved in standard timelines.')"><td>P4 (Low)</td><td>Minor, cosmetic issues</td></tr>
+                                </tbody>
+                            </table>
+                            <p class="mt-4">Click a row to see detailed impact!</p>
+                        `,
+                        interactiveButtonText: null, // No standard interactive button as table rows are clickable
+                        onModalOpen: null // No general modal for this slide, specific `showSeverityDetail` handles interaction
+                    },
+                    {
+                        title: "SLA Breaches – When & Why",
+                        content: `
+                            <p class="mb-4">An <strong>SLA Breach</strong> occurs when a ticket is not acknowledged or resolved within its defined Service Level Agreement (SLA) times.</p>
+                            <p class="font-bold">Common reasons for breaches include:</p>
+                            <ul class="list-disc ml-6 text-left w-full max-w-md mx-auto">
+                                <li>Delay in acknowledgment or resolution</li>
+                                <li>Ownership confusion</li>
+                                <li>Missing updates</li>
+                                <li>Dependency on other teams</li>
+                            </ul>
+                        `,
+                        interactiveButtonText: "Solution: Prevent Breaches",
+                        interactiveContent: `
+                            <h3>Strategies to Prevent SLA Breaches:</h3>
+                            <ul class="list-disc ml-6 text-left">
+                                <li><strong>Timely Follow-ups:</strong> Regularly check on tickets pending action from other teams or users.</li>
+                                <li><strong>Clear Reassignment:</strong> Ensure tickets are assigned to the correct SME without delay.</li>
+                                <li><strong>Proactive Communication:</strong> Keep users updated even if there's no immediate resolution. Manage expectations.</li>
+                                <li><strong>CR Strike Rule:</strong> (See Change Management section) For critical changes, this ensures approvals don't stall the process indefinitely.</li>
+                                <li><strong>Strong Documentation:</strong> Reduces time spent on unknown issues, speeding up resolution.</li>
+                            </ul>
+                            <p class="font-bold mt-4">Proactive management is key to maintaining good SLA!</p>
+                        `
+                    },
+                    {
+                        title: "RCA (Root Cause Analysis)",
+                        content: `
+                            <p class="mb-4"><strong>Root Cause Analysis (RCA)</strong> is a structured approach used to identify the true underlying cause of an issue—not just the visible symptoms.</p>
+                            <p class="mb-4"><strong>Why is it important?</strong></p>
+                            <p class="mb-4">By finding and addressing the root cause, we can prevent the problem from happening again, rather than just fixing it temporarily.</p>
+                            <p class="mb-4"><strong>When is RCA done?</strong></p>
+                            <ul class="list-disc ml-6 text-left">
+                                <li> For repeated incidents.</li>
+                                <li> For critical (P1/P2) tickets.</li>
+                                <li> When there's significant business impact.</li>
+                            </ul>
+                        `,
+                        interactiveButtonText: "RCA Tools & Examples",
+                        interactiveContent: `
+                            <h3>Common RCA Tools:</h3>
+                            <div class="flex flex-col gap-2">
+                                <div class="clickable-list-item" data-details="<p><strong>5 Whys:</strong> Ask 'Why?' five times (or more) to peel back layers of symptoms and get to the root cause. Simple, but effective for many issues.</p><p><em>Example: App crashed. Why? Server overload. Why? Too many requests. Why? Traffic spike after promo. Why? Insufficient server scaling. Why? Budget limitations.</em></p>">
+                                    <strong>5 Whys</strong>
+                                    <div class="clickable-list-details"></div>
+                                </div>
+                                <div class="clickable-list-item" data-details="<p><strong>Fishbone Diagram (Ishikawa):</strong> A visual tool to explore potential causes of a problem, categorized (e.g., Man, Machine, Method, Material, Measurement, Environment). Helps brainstorm all possibilities and see relationships.</p><p><em>Imagine a fish skeleton: the 'head' is the problem, and the 'bones' are major cause categories (e.g., People, Process, Equipment), with smaller 'bones' for specific causes within each category.</em></p>">
+                                    <strong>Fishbone diagram (Ishikawa)</strong>
+                                    <div class="clickable-list-details"></div>
+                                </div>
+                            </div>
+                            
+                        `,
+                         onModalOpen: function() {
+                            document.querySelectorAll('#modalBody .clickable-list-item').forEach(item => {
+                                item.addEventListener('click', function() {
+                                    const detailsDiv = this.querySelector('.clickable-list-details');
+                                    const isActive = this.classList.contains('active');
+                                    document.querySelectorAll('#modalBody .clickable-list-item').forEach(other => {
+                                        other.classList.remove('active');
+                                        other.querySelector('.clickable-list-details').style.maxHeight = '0';
+                                        other.querySelector('.clickable-list-details').style.opacity = '0';
+                                    });
+                                    if (!isActive) {
+                                        this.classList.add('active');
+                                        detailsDiv.innerHTML = this.getAttribute('data-details');
+                                        detailsDiv.style.maxHeight = detailsDiv.scrollHeight + "px";
+                                        detailsDiv.style.opacity = '1';
+                                    }
+                                });
+                            });
+                        }
+                    },
+                    {
+                        title: "Work Notes vs Resolution Notes",
+                        content: `
+                            <p class="mb-4">Accurate documentation is vital. There's a key difference between:</p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Work Notes</th>
+                                        <th>Resolution Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Step-by-step log of actions taken</td><td>Summary of root cause and final solution</td></tr>
+                                    <tr><td>Includes follow-ups & timestamps</td><td>What was fixed, how, and when</td></tr>
+                                    <tr><td>Updated during ticket lifecycle</td><td>Final comment before closure</td></tr>
+                                </tbody>
+                            </table>
+                        `,
+                        interactiveButtonText: "Why it Matters",
+                        interactiveContent: `
+                            <h3>Why the Distinction is Crucial:</h3>
+                            <ul class="list-disc ml-6 text-left">
+                                <li><strong>Transparency:</strong> Work notes keep everyone informed on progress.</li>
+                                <li><strong>Auditability:</strong> Both types of notes provide a clear trail for compliance checks.</li>
+                                <li><strong>Knowledge Sharing:</strong> Resolution notes serve as a knowledge base for future similar issues.</li>
+                                <li><strong>Efficiency:</strong> Clear notes prevent redundant work and speed up future troubleshooting.</li>
+                            </ul>
+                            <p class="font-bold mt-4">Good notes are a sign of a professional support engineer!</p>
+                        `
+                    },
+                    {
+                        title: "When & How to Close a Ticket",
+                        content: `
+                            <p class="mb-4">Closing a ticket properly is as important as resolving it. Ensure:</p>
+                            <ul class="list-disc ml-6 text-left w-full max-w-md mx-auto">
+                                <li>Issue resolved and validated by the user.</li>
+                                <li>Correct resolution category selected.</li>
+                                <li>SLA met (or reason noted if breached).</li>
+                                <li>Clear resolution note written.</li>
+                            </ul>
+                            <p class="mt-4 font-bold text-red-700">Avoid closing without confirmation or audit-ready notes!</p>
+                        `,
+                        interactiveButtonText: "UAT: The Final Check",
+                        interactiveContent: `
+                            <h3>What is UAT? (User Acceptance Testing)</h3>
+                            <p>UAT is the final validation by business users before a solution or change goes live. It ensures:</p>
+                            <ul class="list-disc ml-6 text-left">
+                                <li>CRs/solutions don’t break existing functionality.</li>
+                                <li>The solution truly meets the business need.</li>
+                            </ul>
+                            <p class="font-bold mt-2">Tickets involving changes should always mention:</p>
+                            <ul class="list-disc ml-6 text-left">
+                                <li>UAT passed with evidence (e.g., screenshot, user sign-off).</li>
+                                <li>Tester name/date.</li>
+                                <li>Any bugs found during UAT were retested and confirmed fixed.</li>
+                            </ul>
+                            <p class="font-bold mt-4">UAT is your last line of defense before production!</p>
+                        `
+                    }
+                ],
+                showNavButtons: true // Ticket Lifecycle has its own internal navigation
+            },
+            changeManagement: {
+                title: "Change Request (CR) Lifecycle",
+                slides: [
+                    {
+                        content: `
+                            <p class="mb-4">A <strong>Change Request (CR)</strong>  is a formal proposal to modify, enhance, or fix an application component in a controlled and approved manner.</p>
+                            <p class="font-bold mb-4">CR Lifecycle:</p>
+                            <ol class="list-decimal ml-6 text-left w-full max-w-sm mx-auto">
+                                <li><strong>CR Raised</strong> – by users, stakeholders, or support team</li>
+                                <li><strong>Impact Analysis</strong> – technical and business impact evaluated</li>
+                                <li><strong>Approval</strong> – CR is reviewed and approved by stakeholders</li>
+                                <li><strong>Planning</strong> – added to sprint or scheduled for release</li>
+                                <li><strong>Development & Testing</strong> – implemented in Dev → tested in UAT</li>
+                                <li><strong>Deployment </strong>– deployed to Production after validation</li>
+                                <li><strong>Post-deployment Review</strong> – ensure CR is successful and stable</li>
+                            </ol>
+                        `,
+                        interactiveButtonText: "CR Strike Rule Explained",
+                        interactiveContent: `
+                            <h3>CR Strike Rule</h3>
+                            <p>The <strong>CR Strike Rule</strong> is used to handle delays in CR implementation.</p>
+                            <ul class="list-disc ml-6 text-left">
+                                <li>It tracks how many times a CR is postponed.</li>
+                                <li>After 3 “strikes”, it's escalated to Capstone/BRM leadership for intervention.</li>
+                            </ul>
+                            <p class="font-bold mt-4">This rule helps enforce discipline in change delivery and prevents indefinite delays of critical enhancements.</p>
+                        `
+                    }
+                ],
+                showNavButtons: true
+            },
+            documentation: {
+                title: "Documentation & Knowledge",
+                slides: [
+                    {
+                        content: `
+                            <p class="mb-4">Documentation is the backbone of efficient support operations.</p>
+                            <p class="font-bold mb-4">Why it's important:</p>
+                            <ul class="list-disc ml-6 text-left w-full max-w-md mx-auto">
+                                <li>Ensures audit readiness and regulatory compliance.</li>
+                                <li>Supports faster and smoother onboarding of new team members.</li>
+                                <li>Preserves institutional knowledge during role transitions or exits.</li>
+                            </ul>
+                            <p class="font-bold mt-4">Common types of documentation:</p>
+                            <ul class="list-none text-left w-full max-w-sm mx-auto">
+                                <li class="clickable-list-item" data-details="<p><strong>KEDB (Known Error Database):</strong> A living repository of known issues, their symptoms, workarounds, and permanent solutions. Reduces troubleshooting time significantly.</p>"><strong>KEDB</strong></li>
+                                <li class="clickable-list-item" data-details="<p><strong>SOPs (Standard Operating Procedures):</strong> Step-by-step guides for routine tasks, ensuring consistency and quality in operations.</p>"><strong>SOPs</strong></li>
+                                <li class="clickable-list-item" data-details="<p><strong>Weekly reports, KT decks, MoMs:</strong> Regular updates, knowledge transfer materials, and minutes of meetings – all crucial for communication and record-keeping.</p>">Weekly reports, KT decks, MoMs</li>
+                            </ul>
+                        `,
+                        interactiveButtonText: "Explore KEDB & KT",
+                        interactiveContent: `
+                            <h3>KEDB & KT: More Details</h3>
+                            <h4> KEDB – Known Error Database</h4>
+                            <p>The KEDB is a vital repository for support teams:</p>
+                            <ul class="list-disc ml-6 text-left">
+                                <li>Stores known issues and their solutions.</li>
+                                <li>Reduces time spent troubleshooting repeat incidents.</li>
+                                <li>Updated after recurring issues are diagnosed or an RCA is conducted.</li>
+                                <li>Should include: issue summary, reproduction steps, resolution steps, and visual evidence (e.g., screenshots).</li>
+                            </ul>
+                            <h3 class="mt-6">KT (Knowledge Transfer)</h3>
+                            <p>KT is how knowledge is passed on within the team:</p>
+                            <ul class="list-disc ml-6 text-left">
+                                <li>Happens during new joiner onboarding, application handovers, or after major CR go-lives.</li>
+                                <li>Should include: Environment walkthroughs, ticket history, support timelines, and common scenarios.</li>
+                            </ul>
+                            <p class="font-bold mt-4">Timely KT and documentation help the team work better together and avoid gaps in knowledge.</p>
+                        `,
+                        onModalOpen: function() {
+                            document.querySelectorAll('#modalBody .clickable-list-item').forEach(item => {
+                                item.addEventListener('click', function() {
+                                    const detailsDiv = this.querySelector('.clickable-list-details');
+                                    const isActive = this.classList.contains('active');
+                                    document.querySelectorAll('#modalBody .clickable-list-item').forEach(other => {
+                                        other.classList.remove('active');
+                                        other.querySelector('.clickable-list-details').style.maxHeight = '0';
+                                        other.querySelector('.clickable-list-details').style.opacity = '0';
+                                    });
+                                    if (!isActive) {
+                                        this.classList.add('active');
+                                        detailsDiv.innerHTML = this.getAttribute('data-details');
+                                        detailsDiv.style.maxHeight = detailsDiv.scrollHeight + "px";
+                                        detailsDiv.style.opacity = '1';
+                                    }
+                                });
+                            });
+                        }
+                    }
+                ],
+                showNavButtons: true
+            },
+            metricsAndTools: {
+                title: "Metrics & Tools",
+                slides: [
+                    {
+                        content: `
+                            <p class="mb-4">We measure success using key metrics:</p>
+                            <ul class="list-disc ml-6 text-left w-full max-w-md mx-auto">
+                                <li><strong>SLA compliance rate (%):</strong> How often we meet our service level agreements.</li>
+                                <li><strong>Ticket backlog volume:</strong> Number of unresolved tickets awaiting action.</li>
+                                <li><strong>Mean Time to Resolve (MTTR):</strong> Average time taken to resolve an issue.</li>
+                                <li><strong>CR deployment success rate:</strong> Percentage of successful change deployments.</li>
+                                <li><strong>RCA documentation rate:</strong> How many recurring issues get a documented root cause analysis.</li>
+                            </ul>
+                        `,
+                        interactiveButtonText: "Common Tools Used",
+                        interactiveContent: `
+                            
+                            <div class="flex flex-col gap-2">
+                                <div class="clickable-list-item" data-details="<p> These are powerful ticketing systems for logging, tracking, and managing all types of requests and incidents. They're the central hub of support operations.</p>">
+                                    <strong>Jira / ServiceNow</strong> – Ticketing
+                                    <div class="clickable-list-details"></div>
+                                </div>
+                                <div class="clickable-list-item" data-details="<p> Monitoring tools that provide real-time insights into application performance, server health, and more. They help us detect issues proactively.</p>">
+                                    <strong>LogicMonitor / AppDynamics</strong> – Monitoring
+                                    <div class="clickable-list-details"></div>
+                                </div>
+                                <div class="clickable-list-item" data-details="<p> Platforms used for documentation, storing SOPs, KEDBs, and other knowledge articles. Crucial for knowledge management.</p>">
+                                    <strong>SharePoint / Confluence</strong> – Documentation
+                                    <div class="clickable-list-details"></div>
+                                </div>
+                                <div class="clickable-list-item" data-details="<p> Essential communication tools for internal team discussions, external communication with users, and collaboration.</p>">
+                                    <strong>Outlook / Teams / Slack</strong> – Communication
+                                    <div class="clickable-list-details"></div>
+                                </div>
+                            </div>
+                        `,
+                        onModalOpen: function() {
+                            document.querySelectorAll('#modalBody .clickable-list-item').forEach(item => {
+                                item.addEventListener('click', function() {
+                                    const detailsDiv = this.querySelector('.clickable-list-details');
+                                    const isActive = this.classList.contains('active');
+                                    document.querySelectorAll('#modalBody .clickable-list-item').forEach(other => {
+                                        other.classList.remove('active');
+                                        other.querySelector('.clickable-list-details').style.maxHeight = '0';
+                                        other.querySelector('.clickable-list-details').style.opacity = '0';
+                                    });
+                                    if (!isActive) {
+                                        this.classList.add('active');
+                                        detailsDiv.innerHTML = this.getAttribute('data-details');
+                                        detailsDiv.style.maxHeight = detailsDiv.scrollHeight + "px";
+                                        detailsDiv.style.opacity = '1';
+                                    }
+                                });
+                            });
+                        }
+                    }
+                ],
+                showNavButtons: true
+            },
+            proTips: {
+                title: "Daily Best Practices for Support Engineers",
+                slides: [
+                    {
+                        content: `
+                            <p class="mb-4">Becoming an effective support engineer involves more than just technical skills:</p>
+                            <ul class="list-disc ml-6 text-left w-full max-w-md mx-auto">
+                                <li>Always maintain up-to-date work notes.</li>
+                                <li>Communicate proactively with all stakeholders.</li>
+                                <li>Understand and follow SLA timelines.</li>
+                                <li>Don’t postpone KT or documentation—do it on time.</li>
+                                <li>Refer to the KEDB to solve known issues quickly.</li>
+                                <li>Keep all actions and notes audit-compliant.</li>
+                            </ul>
+                        `,
+                        interactiveButtonText: "Why These Practices Matter",
+                        interactiveContent: `
+                            <h3>The Impact of Best Practices:</h3>
+                            <ul class="list-disc ml-6 text-left">
+                                <li><strong>Work Notes:</strong> Keep a record of every action—helps with handovers and ensures transparency.</li>
+                                <li><strong>Proactive Communication:</strong> Update users and team members before they ask. It builds trust and avoids surprises.</li>
+                                <li><strong>Know SLA Rules:</strong> Understanding priority levels helps you act quickly and avoid SLA breaches.</li>
+                                <li><strong>KT & Documentation:</strong> Share your knowledge to help the team—especially new joiners or backups.</li>
+                                <li><strong>KEDB Usage:</strong> Use existing solutions for known issues—it saves time and ensures consistency.</li>
+                                <li><strong>Audit Readiness:</strong> Keeping records and following processes helps in audits and builds credibility.</li>
+                            </ul>
+                            <p class="font-bold mt-4">These practices elevate support from reactive to strategic!</p>
+                        `
+                    }
+                ],
+                showNavButtons: true
+            },
+            thankYou: {
+                title: "Thank You",
+                slides: [
+                    {
+                        content: `
+                            <p class="text-xl mb-8">“Application support is not just about solving — it’s about preventing, documenting, and improving every single day.”</p>
+                            <p class="text-xl mb-8">Thank you for your time!</p>
+                            
+                        `,
+                        
+                        onModalOpen: function() {
+                            triggerConfetti('#surprise-confetti-area');
+                            document.querySelector('#modalBody .animated-avatar').style.animation = 'bounce 1s infinite alternate';
+                        },
+                        onModalClose: function() {
+                            document.querySelector('#modalBody .animated-avatar').style.animation = 'none';
+                            const confettiArea = document.getElementById('surprise-confetti-area');
+                            if (confettiArea) {
+                                while (confettiArea.firstChild) {
+                                    confettiArea.removeChild(confettiArea.firstChild);
+                                }
+                            }
+                        }
+                    }
+                ],
+                showNavButtons: true
+            }
+        };
+
+        // Function to render the current slide
+        function renderSlide() {
+            const module = modules[currentSection];
+            const slide = module.slides[currentSlideIndexInModule];
+            
+            let slideHtml = `
+                <h2 class="text-4xl font-extrabold text-center text-gray-900 mb-4">${module.title || ''}</h2>
+            `;
+            if (currentSection === 'dashboard' && module.subtitle) {
+                slideHtml += `<h3 class="text-2xl text-center text-gray-700 mb-6">${module.subtitle}</h3>`;
+            }
+            slideHtml += slide.content;
+
+            if (slide.interactiveButtonText) {
+                slideHtml += `
+                    <button class="interactive-button" onclick="openSlideSpecificModal()">
+                        ${slide.interactiveButtonText}
+                    </button>
+                `;
+            }
+            presentationContainer.innerHTML = slideHtml;
+
+            updateNavigationButtons();
+        }
+
+        // Function to update navigation button states based on current section and slide
+        function updateNavigationButtons() {
+            const module = modules[currentSection];
+
+            if (currentSection === 'dashboard') {
+                backToDashboardButton.classList.add('hidden');
+                prevSectionSlideButton.classList.add('hidden');
+                nextSectionSlideButton.classList.add('hidden');
+                mainNavButtons.style.justifyContent = 'center'; // Center the "Back to Dashboard" if it were visible
+            } else {
+                backToDashboardButton.classList.remove('hidden');
+                mainNavButtons.style.justifyContent = 'space-between'; // Adjust layout for 3 buttons
+
+                // Only show Prev/Next if the module has more than 1 slide
+                if (module.slides.length > 1) {
+                    prevSectionSlideButton.classList.remove('hidden');
+                    nextSectionSlideButton.classList.remove('hidden');
+                    prevSectionSlideButton.disabled = currentSlideIndexInModule === 0;
+                    nextSectionSlideButton.disabled = currentSlideIndexInModule === module.slides.length - 1;
+                } else {
+                    prevSectionSlideButton.classList.add('hidden');
+                    nextSectionSlideButton.classList.add('hidden');
+                }
+            }
+        }
+
+        // Navigate to a specific module
+        function navigateToModule(moduleId, slideIndex = 0) {
+            currentSection = moduleId;
+            currentSlideIndexInModule = slideIndex; // Allows direct jump to specific slide within module
+            renderSlide();
+        }
+
+        // Event listeners for section navigation (Prev/Next within a module)
+        prevSectionSlideButton.addEventListener('click', () => {
+            const module = modules[currentSection];
+            if (currentSlideIndexInModule > 0) {
+                currentSlideIndexInModule--;
+                renderSlide();
+            }
+        });
+
+        nextSectionSlideButton.addEventListener('click', () => {
+            const module = modules[currentSection];
+            if (currentSlideIndexInModule < module.slides.length - 1) {
+                currentSlideIndexInModule++;
+                renderSlide();
+            }
+        });
+
+        // Event listener for Back to Dashboard
+        backToDashboardButton.addEventListener('click', () => {
+            navigateToModule('dashboard');
+        });
+
+        // Universal function to open the modal
+        function openModal(title, contentHTML) {
+            modalTitle.innerHTML = title;
+            modalBody.innerHTML = contentHTML;
+            globalModal.classList.remove('hidden');
+        }
+
+        // Universal function to close the modal
+        function closeModal() {
+            globalModal.classList.add('hidden');
+            modalTitle.innerHTML = '';
+            modalBody.innerHTML = '';
+            const currentModule = modules[currentSection];
+            if (currentModule && currentModule.slides[currentSlideIndexInModule] && currentModule.slides[currentSlideIndexInModule].onModalClose) {
+                currentModule.slides[currentSlideIndexInModule].onModalClose();
+            }
+        }
+
+        // Close modal when clicking outside content
+        globalModal.addEventListener('click', (event) => {
+            if (event.target === globalModal) {
+                closeModal();
+            }
+        });
+
+        // Function to open slide-specific modal content
+        function openSlideSpecificModal() {
+            const module = modules[currentSection];
+            const slide = module.slides[currentSlideIndexInModule];
+            if (slide.interactiveContent) {
+                openModal(slide.interactiveButtonText, slide.interactiveContent);
+                if (slide.onModalOpen) {
+                    setTimeout(() => {
+                        slide.onModalOpen();
+                    }, 50);
+                }
+            }
+        }
+
+        // Specific function for Ticket Severity table interaction
+        function showSeverityDetail(priority, impact, description) {
+            openModal(`Severity: ${priority} (${impact})`, `
+                <div class="severity-modal-content">
+                    <p class="text-lg font-semibold mb-2">${priority} (${impact})</p>
+                    <p>${description}</p>
+                </div>
+            `);
+        }
+
+        // Confetti effect helper
+        function triggerConfetti(targetElementId) {
+            const confettiArea = document.querySelector(targetElementId);
+            if (!confettiArea) return;
+
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
+                confetti.style.animationDelay = `${Math.random() * 0.8}s`;
+                confetti.style.animationDuration = `${1.5 + Math.random() * 0.5}s`;
+                confettiArea.appendChild(confetti);
+                confetti.addEventListener('animationend', () => confetti.remove());
+            }
+        }
+
+        // Initial render: start with the dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            navigateToModule('dashboard');
+        });
+
+    </script>
+</body>
+</html>
